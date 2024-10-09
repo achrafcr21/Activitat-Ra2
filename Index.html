@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicios de JavaScript</title>
+</head>
+<body>
+    <h1>Ejercicios de JavaScript</h1>
+    
+    <h2>Verificar si un valor es número</h2>
+    <button onclick="verificarNumero()">Verificar Número</button>
+
+    <h2>Verificar si el valor es entero o decimal</h2>
+    <button onclick="verificarEnteroDecimal()">Verificar Tipo de Número</button>
+
+    <h2>Conversión de Temperatura</h2>
+    <button onclick="convertirTemperatura()">Convertir Temperatura</button>
+
+    <h2>Calcula el costo de la llamada</h2>
+    <button onclick="calculaImport()">Calcular Costo</button>
+
+    <h2>Comprobar número de 5 dígitos</h2>
+    <input type="text" id="fiveDigitNumber" placeholder="12345">
+    <button onclick="verificarCincoNumeros()">Comprobar Número</button>
+    <p id="fiveDigitResult"></p>
+    <script>
+        function verificarNumero() {
+            let valor = prompt("Introduce un valor:");
+            let mensaje = !isNaN(valor) && valor !== "" ? "El valor es un número." : "El valor no es un número.";
+            alert(mensaje);
+        }
+
+        function verificarEnteroDecimal() {
+            let valor = prompt("Introduce un número:");
+            if (!isNaN(valor) && valor !== "") {
+                let mensaje = Number(valor) === parseInt(valor) ? "El valor es un entero." : "El valor es un decimal.";
+                alert(mensaje);
+            } else {
+                alert("No es un número válido.");
+            }
+        }
+
+        function convertirTemperatura() {
+            let tipo = prompt("Introduce 'C' para convertir de ºC a ºF o 'F' para convertir de ºF a ºC:");
+            let temperatura = prompt("Introduce la temperatura a convertir:");
+            if (tipo === "C" || tipo === "F") {
+                if (!isNaN(temperatura)) {
+                    temperatura = parseFloat(temperatura);
+                    if (tipo === "C") {
+                        let fahrenheit = (9.0 / 5.0) * temperatura + 32;
+                        alert(`${temperatura} ºC es igual a ${fahrenheit} ºF`);
+                    } else {
+                        let celsius = (temperatura - 32) * 5.0 / 9.0;
+                        alert(`${temperatura} ºF es igual a ${celsius} ºC`);
+                    }
+                } else {
+                    alert("La temperatura debe ser un número.");
+                }
+            } else {
+                alert("Tipo de conversión no válido.");
+            }
+        }
+
+        function calculaImport() {
+            let minutos = parseInt(prompt("Introduce los minutos de la llamada:"));
+            let segundos = parseInt(prompt("Introduce los segundos de la llamada:"));
+            if (isNaN(minutos) || isNaN(segundos)) {
+                alert("Por favor, introduce números válidos para minutos y segundos.");
+                return;
+            }
+
+            
+            const tarifaPorMinuto = 0.05; 
+            const tarifaConexion = 0.10; 
+            const IVA = 0.21; // 21% IVA
+
+            let tiempoTotalEnMinutos = minutos + segundos / 60;
+            let costoSinIVA = tarifaConexion + tiempoTotalEnMinutos * tarifaPorMinuto;
+            let costoConIVA = costoSinIVA * (1 + IVA);
+
+            alert(`Costo sin IVA: ${costoSinIVA.toFixed(2)} €\nCosto con IVA: ${costoConIVA.toFixed(2)} €`);
+        }
+        
+        function verificarCincoNumeros() {
+            const number = document.getElementById('fiveDigitNumber').value;
+            const resultElement = document.getElementById('fiveDigitResult');
+
+            if (number.length === 5 && !isNaN(number)) {
+                if (number[0] === number[number.length - 1]) {
+                    resultElement.textContent = 'El número comienza y termina con el mismo dígito.';
+                } else {
+                    resultElement.textContent = 'El número NO comienza y termina con el mismo dígito.';
+                }
+            } else {
+                resultElement.textContent = 'Por favor, introduce un número válido de 5 dígitos.';
+            }
+        }
+        
+    </script>
+</body>
+</html>
